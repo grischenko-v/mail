@@ -81,7 +81,8 @@ function App() {
 			method: 'delete'
 		})
 		.then(response => response.json())
-		.catch(e => console.log(e));
+		.catch(e => console.log(e))
+		.finally(() => setModalVisible(false));
 	}
 
 	function onAdd() {
@@ -114,7 +115,8 @@ function App() {
 			body: JSON.stringify(value)
 		})
 		.then(response => response.json())
-		.catch(e => console.log(e));
+		.catch(e => console.log(e))
+		.finally(() => setModalVisible(false));
 	}
 
 	return (
