@@ -25,10 +25,27 @@ export function makeServer({environment = "test"} = {}) {
 		},
 
 		routes() {
-			this.namespace = "api"
+			this.namespace = "api";
 
 			this.get("/users", (schema) => {
 				return schema.users.all()
+			});
+			
+			this.post("/users/:id", (schema, request) => {
+				let attrs = JSON.parse(request.requestBody);
+				let id = request.params.id;
+				if (id) {
+					let user = schema.users.find(id);
+	
+	  				return user.update(attrs)
+				}
+				return schema.movies.create(attrs);
+			});
+			
+			this.delete("/users/:id", (schema, request) => {
+			  let id = request.params.id;
+			
+			  return schema.movies.find(id).destroy()
 			})
 		},
 	});

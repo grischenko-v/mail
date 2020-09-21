@@ -78,7 +78,7 @@ function App() {
 
 	function onDelete(id) {
 		fetch(url + '/' + id, {
-			method: 'delete'
+			method: 'DELETE'
 		})
 		.then(response => response.json())
 		.catch(e => console.log(e))
@@ -87,6 +87,7 @@ function App() {
 
 	function onAdd() {
 		setModalTitle('Add user');
+		setCurrentItem(initialItem);
 		setModalVisible(true);
 	}
 
@@ -110,7 +111,7 @@ function App() {
 	}
 
 	function onFormSubmit(value) {
-		fetch(url + '/' + value.id, {
+		fetch(url + '/' + currentItem.id, {
 			method: 'POST',
 			body: JSON.stringify(value)
 		})
