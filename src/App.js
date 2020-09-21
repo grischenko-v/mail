@@ -48,7 +48,7 @@ const getcolumns = () => [
 	},
 ];
 
-const url = "/api/users";
+const baseUrl = "/api/users";
 
 const initialItem = {roles: [], name: [], id: null, key: null};
 
@@ -61,7 +61,7 @@ function App() {
 	const [modalTitle, setModalTitle] = useState('Add user');
 
 	useEffect(() => {
-		fetch(url)
+		fetch(baseUrl)
 			.then(res => res.json())
 			.then(json => {
 				setData(json.users);
@@ -77,10 +77,9 @@ function App() {
 	}
 
 	function onDelete(id) {
-		fetch(url + '/' + id, {
+		fetch(baseUrl + '/' + id, {
 			method: 'DELETE'
 		})
-		.then(response => response.json())
 		.catch(e => console.log(e))
 		.finally(() => setModalVisible(false));
 	}
@@ -111,7 +110,9 @@ function App() {
 	}
 
 	function onFormSubmit(value) {
-		fetch(url + '/' + currentItem.id, {
+		const url = currentItem.id ? baseUrl + '/' + currentItem.id : baseUrl;
+	
+		fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(value)
 		})
